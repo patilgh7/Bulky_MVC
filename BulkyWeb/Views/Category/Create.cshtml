@@ -51,3 +51,24 @@
     </div>
 
 </form>
+
+<!--
+    Shared folder is default location for any partial view.
+    Because of that it will automatically find that and it will add the javascript that is needed for client side validation.
+
+     
+
+    @section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    write this code 
+    when you have to just add the script provided by default on the page where we want client side validation
+-->
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
