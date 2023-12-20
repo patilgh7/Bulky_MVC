@@ -29,6 +29,14 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
+            if(obj.Name == obj.DisplayOrder.ToString())
+            {
+                // Custom Validation
+                // suppose anyone can put same numbers in name textbox and display order textbox
+                // lets say we have put name = 55 and display order = 55
+                // so thats why below validation is given
+                ModelState.AddModelError("name", "The Display Order can not exactly match the name");
+            }
             if(ModelState.IsValid)
             {
                 _db.Categories.Add(obj);

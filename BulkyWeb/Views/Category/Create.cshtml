@@ -2,6 +2,8 @@
 
 <!--
     Display error on UI using tag helpers =>  <span asp-validation-for="Name" class="text-danger"> </span>
+
+     <div asp-validation-summary="All"></div> => gives all validation summary
 -->
 
 <form method="post">
@@ -11,6 +13,8 @@
             <hr />
 
         </div>
+
+        <div asp-validation-summary="All"></div>
 
         <div class="mb-3 row pb-1">
             <label asp-for="Name" class="p-0"> </label>
