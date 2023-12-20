@@ -3,7 +3,9 @@
 <!--
     Display error on UI using tag helpers =>  <span asp-validation-for="Name" class="text-danger"> </span>
 
-     <div asp-validation-summary="All"></div> => gives all validation summary
+    <div asp-validation-summary="All"></div> => gives all validation summary
+
+    <div asp-validation-summary="ModelOnly"></div> => it indicates that only model-level errors should be displayed in this particular
 -->
 
 <form method="post">
@@ -14,7 +16,9 @@
 
         </div>
 
-        <div asp-validation-summary="All"></div>
+        @* <div asp-validation-summary="All"></div> *@
+
+        <div asp-validation-summary="ModelOnly"></div>
 
         <div class="mb-3 row pb-1">
             <label asp-for="Name" class="p-0"> </label>

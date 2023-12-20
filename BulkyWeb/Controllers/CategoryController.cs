@@ -37,7 +37,15 @@ namespace BulkyWeb.Controllers
                 // so thats why below validation is given
                 ModelState.AddModelError("name", "The Display Order can not exactly match the name");
             }
-            if(ModelState.IsValid)
+
+            if (obj.Name.ToLower() == "test")
+            {
+                //  ModelState.AddModelError("", "Test is invalid value"); => here 1st parameter i.e. Key it is empty.
+
+                ModelState.AddModelError("", "Test is invalid value");
+            }
+
+            if (ModelState.IsValid)
             {
                 _db.Categories.Add(obj);
 
