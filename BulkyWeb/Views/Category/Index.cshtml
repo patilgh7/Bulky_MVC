@@ -1,7 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+<!--
+    Note : 
+
+    At model List<Category> gives you whole list of data to show on this page
+    when you use At model List<Category> then model m will be small case
+    and when use foreach loop to iterate then Model M will be capital.
+
+    If you want to write c sharp code inside view we use "At sign".
+    You can incorporate c sharp code in view using At sign.
+
+    <table> tag is used to create table
+    <tr> tag is used to craete row (horizontal)
+    <th> tag is used to craete table column heading
+    <td> tag is used to craete table column values(vertical) 
+
+
+-->
+@model List<Category>
 
 <h1>Category List</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Category Name
+            </th>
+            <th>
+                Display Order
+            </th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach(var obj in Model.OrderBy(u=>u.DisplayOrder))
+        {
+            <tr>
+                <td> @obj.Name </td>
+                <td> @obj.DisplayOrder </td>
+            </tr>
+        }
+     
+    </tbody>
+
+
+
+</table>
