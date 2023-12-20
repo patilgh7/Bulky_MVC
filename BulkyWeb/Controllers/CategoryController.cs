@@ -29,17 +29,20 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
+            if(ModelState.IsValid)
+            {
+                _db.Categories.Add(obj);
 
-            _db.Categories.Add(obj);
+                //Actual saving the data to database which is filled by UI
+                _db.SaveChanges();
 
-            //Actual saving the data to database which is filled by UI
+                // You can pass action only i.e Index when you are same controller otherwise pass 2nd parameter controller is good practice
+                //return RedirectToAction("Index","Category");
 
-            _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
-            // You can pass action only i.e Index when you are same controller otherwise pass 2nd parameter controller is good practice
-            //return RedirectToAction("Index","Category");
-
-            return RedirectToAction("Index");
+            return View();  
         }
     }
 }

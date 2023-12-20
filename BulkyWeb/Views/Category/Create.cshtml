@@ -1,5 +1,9 @@
 ﻿@model Category
 
+<!--
+    Display error on UI using tag helpers =>  <span asp-validation-for="Name" class="text-danger"> </span>
+-->
+
 <form method="post">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
@@ -11,11 +15,13 @@
         <div class="mb-3 row pb-1">
             <label asp-for="Name" class="p-0"> </label>
             <input asp-for="Name" class="form-control"/>
+            <span asp-validation-for="Name" class="text-danger"> </span>
         </div>
 
         <div class="mb-3 row pb-1">
             <label asp-for="DisplayOrder" class="p-0"> </label>
             <input asp-for="DisplayOrder" class="form-control" />
+            <span asp-validation-for="DisplayOrder" class="text-danger"> </span>
         </div>
 
         <div class="row">
