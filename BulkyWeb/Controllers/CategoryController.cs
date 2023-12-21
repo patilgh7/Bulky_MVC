@@ -118,7 +118,7 @@ namespace BulkyWeb.Controllers
             {
                 _db.Categories.Update(obj);
 
-                //Actual saving the data to database which is filled by UI
+                //Actual saving the updated data to database which is filled by UI
                 _db.SaveChanges();
 
                 // You can pass action only i.e Index when you are same controller otherwise pass 2nd parameter controller is good practice
@@ -130,6 +130,57 @@ namespace BulkyWeb.Controllers
             return View();
         }
 
+
+        //  ---------------------------------xxxxx-------------------------------------------
+
+        // Delete Operation
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+         
+            // Using Find method you can only deal with primary key
+            Category? categoryFromDb = _db.Categories.Find(id);
+
+            // Using FirstOrDefault method you can deal with any parameter like Id, Name anything
+            // Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);
+
+            // Using Where method
+            // Category? categoryFromDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
+
+
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryFromDb);
+        }
+
+        [HttpPost,ActionName("Delete")]
+        public IActionResult DeletePost(int? id)
+        {
+            Category? obj = _db.Categories.Find(id); 
+
+            if (obj == null) 
+            {
+                return NotFound();
+            }
+
+            _db.Categories.Remove(obj);
+
+            //Actual deleting the data to database which is deleted by UI
+            _db.SaveChanges();
+
+            // You can pass action only i.e Index when you are same controller otherwise pass 2nd parameter controller is good practice
+            //return RedirectToAction("Index","Category");
+
+            return RedirectToAction("Index");
+
+        }
 
 
     }
