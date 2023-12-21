@@ -21,10 +21,14 @@ namespace BulkyWeb.Controllers
             return View(objCategoryList);
         }
 
+
+        // Create Operation
+
         public IActionResult Create()
         {
             return View();
         }
+
 
         [HttpPost]
         public IActionResult Create(Category obj)
@@ -61,6 +65,7 @@ namespace BulkyWeb.Controllers
             return View();  
         }
 
+        //  ---------------------------------xxxxx-------------------------------------------
 
         // For Edit 
 
@@ -76,6 +81,8 @@ namespace BulkyWeb.Controllers
          * indicating that the provided identifier is invalid. 
          * If the id is not null, the method proceeds with further processing.
          */
+
+        // Update Operation
         public IActionResult Edit(int? id)
         {
             if(id == null || id == 0)
@@ -106,25 +113,10 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult Edit(Category obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString())
-            {
-                // Custom Validation
-                // suppose anyone can put same numbers in name textbox and display order textbox
-                // lets say we have put name = 55 and display order = 55
-                // so thats why below validation is given
-                ModelState.AddModelError("name", "The Display Order can not exactly match the name");
-            }
-
-            if (obj.Name.ToLower() == "test")
-            {
-                //  ModelState.AddModelError("", "Test is invalid value"); => here 1st parameter i.e. Key it is empty.
-
-                ModelState.AddModelError("", "Test is invalid value");
-            }
-
+       
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
+                _db.Categories.Update(obj);
 
                 //Actual saving the data to database which is filled by UI
                 _db.SaveChanges();
