@@ -18,10 +18,10 @@
 -->
 @model List<Category>
 
-@if (TempData["success"] != null)
-{
-    <h2>@TempData["success"]</h2>
-}
+
+@* For Notification display you have to add this partial tag in every modules index page. *@
+
+<partial name="_Notification" />
 
 <div class="container">
     <div class="row pt-4 pb-3">

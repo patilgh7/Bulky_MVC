@@ -1,0 +1,16 @@
+﻿
+@*  
+    This Notication page we have created in partial view because we have multiple modules like Category,Product
+    It is not good to have copy same TempData code in every module.So thats why we are using partial view.
+    If you write TempData logic in partial view it wll be helpful to display in every module. *@
+
+@if (TempData["success"] != null)
+{
+    <h2>@TempData["success"]</h2>
+}
+
+
+@if (TempData["error"] != null)
+{
+    <h2>@TempData["error"]</h2>
+}
