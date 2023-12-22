@@ -1,4 +1,84 @@
 ﻿@page
 @model BulkyWebRazor_Temp.Pages.Categories.IndexModel
 
-<h1>Category List</h1>
+
+<!--
+    Note : 
+
+    At model List<Category> gives you whole list of data to show on this page
+    when you use At model List<Category> then model m will be small case
+    and when use foreach loop to iterate then Model M will be capital.
+
+    If you want to write c sharp code inside view we use "At sign".
+    You can incorporate c sharp code in view using At sign.
+
+    <table> tag is used to create table
+    <tr> tag is used to craete row (horizontal)
+    <th> tag is used to craete table column heading
+    <td> tag is used to craete table column values(vertical) 
+
+
+-->
+
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+
+        <div class="col-6">
+            <h2 class="text-primary">
+                Category List
+            </h2>
+        </div>
+
+        <div class="col-6 text-end">
+            <a asp-page="categories/create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Create New Category
+            </a>
+
+        </div>
+
+
+    </div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Category Name
+            </th>
+            <th>
+                Display Order
+            </th>
+
+            <th></th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach(var obj in Model.CategoryList.OrderBy(u=>u.DisplayOrder))
+        {
+            <tr>
+                <td> @obj.Name </td>
+                <td> @obj.DisplayOrder </td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-page="category/edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+
+                            <a asp-page="category/delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </a>
+                    </div>
+                </td>
+            </tr>
+        }
+     
+    </tbody>
+
+
+</table>
+
+</div>
+
