@@ -59,6 +59,10 @@ namespace BulkyWeb.Controllers
                 // You can pass action only i.e Index when you are same controller otherwise pass 2nd parameter controller is good practice
                 //return RedirectToAction("Index","Category");
 
+
+                // Create TempData for display notification where the data saved successfully or not.
+                TempData["success"] = "Category created successfully";
+
                 return RedirectToAction("Index");
             }
 
@@ -121,6 +125,9 @@ namespace BulkyWeb.Controllers
                 //Actual saving the updated data to database which is filled by UI
                 _db.SaveChanges();
 
+                // Create TempData for display notification where the data updated successfully or not.
+                TempData["success"] = "Category updated successfully";
+
                 // You can pass action only i.e Index when you are same controller otherwise pass 2nd parameter controller is good practice
                 //return RedirectToAction("Index","Category");
 
@@ -174,6 +181,9 @@ namespace BulkyWeb.Controllers
 
             //Actual deleting the data to database which is deleted by UI
             _db.SaveChanges();
+
+            // Create TempData for display notification where the data deleted successfully or not.
+            TempData["success"] = "Category deleted successfully";
 
             // You can pass action only i.e Index when you are same controller otherwise pass 2nd parameter controller is good practice
             //return RedirectToAction("Index","Category");
