@@ -4,13 +4,33 @@
     It is not good to have copy same TempData code in every module.So thats why we are using partial view.
     If you write TempData logic in partial view it wll be helpful to display in every module. *@
 
+@*
+        Toastr provides better look and feel for notification
+
+        we have added toastr for this you have add toastr.min.js in notification file and
+        toastr.css file in _Layout.cshtml file
+*@
+
 @if (TempData["success"] != null)
 {
-    <h2>@TempData["success"]</h2>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script type="text/javascript">
+        toastr.success('@TempData["success"]');
+    </script>
 }
 
 
 @if (TempData["error"] != null)
 {
-    <h2>@TempData["error"]</h2>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script type="text/javascript">
+        toastr.error('@TempData["success"]');
+    </script>
 }
