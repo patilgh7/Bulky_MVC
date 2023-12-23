@@ -1,0 +1,91 @@
+﻿@page
+@model BulkyWebRazor_Temp.Pages.Categories.EditModel
+
+
+
+@* 
+    Display error on UI using tag helpers =>  <span asp-validation-for="Name" class="text-danger"> </span>
+
+    <div asp-validation-summary="All"></div> => gives all validation summary
+
+    <div asp-validation-summary="ModelOnly"></div> => it indicates that only model-level errors should be displayed in this particular
+
+    Note : Here in this we have variable called Id so thats why we don't required input tag for this so we have commented it.
+           But instead of this suppose we have Category_Id variable
+           then you have to mention input tag like below
+           
+           <input asp-for="Category_Id" hidden />
+
+           Why we are doing this? Why we are using input tag for Category_Id?
+
+           => For some reason your Id was Category_Id or anything else then you will have to add hidden property.
+           If you haven't add this hidden property what will happen rather than editing existing record.
+           It will keep that record and it will add new record on top of that with the new name that you edited. *@
+           
+
+
+<form method="post">
+    <input asp-for="category.Id" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit Category</h2>
+            <hr />
+
+        </div>
+
+        @* <div asp-validation-summary="All"></div> *@
+
+        <div asp-validation-summary="ModelOnly"></div>
+
+        <div class="mb-3 row pb-1">
+            <label asp-for="category.Name" class="p-0"> </label>
+            <input asp-for="category.Name" class="form-control"/>
+            <span asp-validation-for="category.Name" class="text-danger"> </span>
+        </div>
+
+        <div class="mb-3 row pb-1">
+            <label asp-for="category.DisplayOrder" class="p-0"> </label>
+            <input asp-for="category.DisplayOrder" class="form-control" />
+            <span asp-validation-for="category.DisplayOrder" class="text-danger"> </span>
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-primary form-control" >Update</button>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <a asp-page="/categories/index" class="btn btn-outline-secondary border form-control" >
+                    Back To List
+                </a>
+            </div>
+        </div>
+
+        
+
+      
+
+    </div>
+
+</form>
+
+<!--
+    Shared folder is default location for any partial view.
+    Because of that it will automatically find that and it will add the javascript that is needed for client side validation.
+
+     
+
+    @section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    write this code 
+    when you have to just add the script provided by default on the page where we want client side validation
+-->
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
