@@ -35,7 +35,7 @@ namespace BulkyWebRazor_Temp.Pages.Categories
                 _db.SaveChanges();
 
                 // Create TempData for display notification where the data updated successfully or not.
-                //TempData["success"] = "Category updated successfully";
+                TempData["success"] = "Category updated successfully";
 
                 return RedirectToPage("Index");
             }

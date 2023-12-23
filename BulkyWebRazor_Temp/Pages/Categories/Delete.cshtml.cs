@@ -40,6 +40,8 @@ namespace BulkyWebRazor_Temp.Pages.Categories
             //Actual deleting the data to database which is deleted by UI
             _db.SaveChanges();
 
+            TempData["success"] = "Category deleted successfully";
+
             return RedirectToPage("Index");
            
 
