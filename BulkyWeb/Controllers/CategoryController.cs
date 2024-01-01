@@ -7,17 +7,17 @@ namespace BulkyBookWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _categoryRepo;
-        public CategoryController(ICategoryRepository db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _categoryRepo = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
             // Retrieving data from database and showing it into the category view page.
             // Also Refer the code of Index.cshtml file from Category folder how we can show this list on view page.
 
-            List<Category> objCategoryList = _categoryRepo.GetAll().ToList();
+            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
 
             return View(objCategoryList);
         }
@@ -52,10 +52,10 @@ namespace BulkyBookWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _categoryRepo.Add(obj);
+                _unitOfWork.Category.Add(obj);
 
                 //Actual saving the data to database which is filled by UI
-                _categoryRepo.Save();
+                _unitOfWork.Save();
 
                 // You can pass action only i.e Index when you are same controller otherwise pass 2nd parameter controller is good practice
                 //return RedirectToAction("Index","Category");
@@ -98,7 +98,7 @@ namespace BulkyBookWeb.Controllers
             // 3 Approaches for finding the id for editing....but best approach is using FirstOrDefault method
 
             // Using Find method you can only deal with primary key
-            Category? categoryFromDb = _categoryRepo.Get(u => u.Id == id);
+            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
 
             // Using FirstOrDefault method you can deal with any parameter like Id, Name anything
             // Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);
@@ -121,10 +121,10 @@ namespace BulkyBookWeb.Controllers
        
             if (ModelState.IsValid)
             {
-                _categoryRepo.Update(obj);
+                _unitOfWork.Category.Update(obj);
 
                 //Actual saving the updated data to database which is filled by UI
-                _categoryRepo.Save();
+                _unitOfWork.Save();
 
                 // Create TempData for display notification where the data updated successfully or not.
                 TempData["success"] = "Category updated successfully";
@@ -151,7 +151,7 @@ namespace BulkyBookWeb.Controllers
 
          
             // Using Find method you can only deal with primary key
-            Category? categoryFromDb = _categoryRepo.Get(u => u.Id == id);
+            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
 
             // Using FirstOrDefault method you can deal with any parameter like Id, Name anything
             // Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);
@@ -171,17 +171,17 @@ namespace BulkyBookWeb.Controllers
         [HttpPost,ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
-            Category? obj = _categoryRepo.Get(u => u.Id == id); 
+            Category? obj = _unitOfWork.Category.Get(u => u.Id == id); 
 
             if (obj == null) 
             {
                 return NotFound();
             }
 
-            _categoryRepo.Remove(obj);
+            _unitOfWork.Category.Remove(obj);
 
             //Actual deleting the data to database which is deleted by UI
-            _categoryRepo.Save();
+            _unitOfWork.Save();
 
             // Create TempData for display notification where the data deleted successfully or not.
             TempData["success"] = "Category deleted successfully";
