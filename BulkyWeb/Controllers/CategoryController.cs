@@ -1,4 +1,5 @@
 ﻿using Bulky.DataAccess.Data;
+using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,17 +7,17 @@ namespace BulkyWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        private readonly ICategoryRepository _categoryRepo;
+        public CategoryController(ICategoryRepository db)
         {
-            _db = db;
+            _categoryRepo = db;
         }
         public IActionResult Index()
         {
             // Retrieving data from database and showing it into the category view page.
             // Also Refer the code of Index.cshtml file from Category folder how we can show this list on view page.
 
-            List<Category> objCategoryList = _db.Categories.ToList();
+            List<Category> objCategoryList = _categoryRepo.GetAll().ToList();
 
             return View(objCategoryList);
         }
@@ -51,10 +52,10 @@ namespace BulkyWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
+                _categoryRepo.Add(obj);
 
                 //Actual saving the data to database which is filled by UI
-                _db.SaveChanges();
+                _categoryRepo.Save();
 
                 // You can pass action only i.e Index when you are same controller otherwise pass 2nd parameter controller is good practice
                 //return RedirectToAction("Index","Category");
@@ -97,7 +98,7 @@ namespace BulkyWeb.Controllers
             // 3 Approaches for finding the id for editing....but best approach is using FirstOrDefault method
 
             // Using Find method you can only deal with primary key
-            Category? categoryFromDb = _db.Categories.Find(id);
+            Category? categoryFromDb = _categoryRepo.Get(u => u.Id == id);
 
             // Using FirstOrDefault method you can deal with any parameter like Id, Name anything
             // Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);
@@ -120,10 +121,10 @@ namespace BulkyWeb.Controllers
        
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
+                _categoryRepo.Update(obj);
 
                 //Actual saving the updated data to database which is filled by UI
-                _db.SaveChanges();
+                _categoryRepo.Save();
 
                 // Create TempData for display notification where the data updated successfully or not.
                 TempData["success"] = "Category updated successfully";
@@ -150,7 +151,7 @@ namespace BulkyWeb.Controllers
 
          
             // Using Find method you can only deal with primary key
-            Category? categoryFromDb = _db.Categories.Find(id);
+            Category? categoryFromDb = _categoryRepo.Get(u => u.Id == id);
 
             // Using FirstOrDefault method you can deal with any parameter like Id, Name anything
             // Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);
@@ -170,17 +171,17 @@ namespace BulkyWeb.Controllers
         [HttpPost,ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
-            Category? obj = _db.Categories.Find(id); 
+            Category? obj = _categoryRepo.Get(u => u.Id == id); 
 
             if (obj == null) 
             {
                 return NotFound();
             }
 
-            _db.Categories.Remove(obj);
+            _categoryRepo.Remove(obj);
 
             //Actual deleting the data to database which is deleted by UI
-            _db.SaveChanges();
+            _categoryRepo.Save();
 
             // Create TempData for display notification where the data deleted successfully or not.
             TempData["success"] = "Category deleted successfully";
