@@ -3,8 +3,9 @@ using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BulkyBookWeb.Controllers
+namespace BulkyBookWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -34,7 +35,7 @@ namespace BulkyBookWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            if(obj.Name == obj.DisplayOrder.ToString())
+            if (obj.Name == obj.DisplayOrder.ToString())
             {
                 // Custom Validation
                 // suppose anyone can put same numbers in name textbox and display order textbox
@@ -67,7 +68,7 @@ namespace BulkyBookWeb.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View();  
+            return View();
         }
 
         //  ---------------------------------xxxxx-------------------------------------------
@@ -90,7 +91,7 @@ namespace BulkyBookWeb.Controllers
         // Update Operation
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
@@ -118,7 +119,7 @@ namespace BulkyBookWeb.Controllers
         [HttpPost]
         public IActionResult Edit(Category obj)
         {
-       
+
             if (ModelState.IsValid)
             {
                 _unitOfWork.Category.Update(obj);
@@ -149,7 +150,7 @@ namespace BulkyBookWeb.Controllers
                 return NotFound();
             }
 
-         
+
             // Using Find method you can only deal with primary key
             Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
 
@@ -168,12 +169,12 @@ namespace BulkyBookWeb.Controllers
             return View(categoryFromDb);
         }
 
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
-            Category? obj = _unitOfWork.Category.Get(u => u.Id == id); 
+            Category? obj = _unitOfWork.Category.Get(u => u.Id == id);
 
-            if (obj == null) 
+            if (obj == null)
             {
                 return NotFound();
             }
