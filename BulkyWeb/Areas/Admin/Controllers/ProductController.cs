@@ -21,16 +21,6 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
 
-            // Projections in EF Core
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem 
-            {
-                Text = u.Name,
-                Value = u.Id.ToString()
-            });
-
-            
-           
-
             return View(objProductList);
         }
 
@@ -39,6 +29,15 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
+            // Projections in EF Core
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
+
+            ViewBag.CategoryList = CategoryList;
+
             return View();
         }
 
