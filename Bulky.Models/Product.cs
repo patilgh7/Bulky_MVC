@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BulkyBook.Models
 {
@@ -46,5 +47,11 @@ namespace BulkyBook.Models
         [Range(1, 1000)]
         public double Price100 { get; set; }
 
+        // public Category Category { get; set; } => This Property Used For Foreign Key Navigation ..
+        // And Pass CategoryId to ForeignKey Annotation
+        // This Foreign Key is used for Product Table 
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
     }
 }
