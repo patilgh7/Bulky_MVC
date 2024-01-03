@@ -1,6 +1,7 @@
 ﻿using BulkyBook.DataAccess.Data;
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
+using BulkyBook.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -29,28 +30,28 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            // Projections in EF Core
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            ProductVM productVM = new()
             {
-                Text = u.Name,
-                Value = u.Id.ToString()
-            });
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Product = new Product()
+            };
 
-            //ViewBag.CategoryList = CategoryList;
 
-            ViewData["CategoryList"] = CategoryList;
-
-            return View();
+            return View(productVM);
         }
 
 
         [HttpPost]
-        public IActionResult Create(Product obj)
+        public IActionResult Create(ProductVM productVM)
         {
          
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Product.Add(productVM.Product);
 
                 //Actual saving the data to database which is filled by UI
                 _unitOfWork.Save();
@@ -64,8 +65,19 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
                 return RedirectToAction("Index");
             }
+            else
+            {
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                
 
-            return View();
+                return View(productVM);
+            }
+
+           
         }
 
         //  ---------------------------------xxxxx-------------------------------------------
