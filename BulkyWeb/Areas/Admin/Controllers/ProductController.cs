@@ -2,6 +2,7 @@
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
 {
@@ -19,6 +20,16 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             // Also Refer the code of Index.cshtml file from Product folder how we can show this list on view page.
 
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+
+            // Projections in EF Core
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem 
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
+
+            
+           
 
             return View(objProductList);
         }
