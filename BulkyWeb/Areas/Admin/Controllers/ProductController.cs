@@ -24,7 +24,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             // Retrieving data from database and showing it into the product view page.
             // Also Refer the code of Index.cshtml file from Product folder how we can show this list on view page.
 
-            List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
 
             return View(objProductList);
         }
