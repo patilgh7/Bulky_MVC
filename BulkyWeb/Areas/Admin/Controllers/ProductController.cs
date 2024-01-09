@@ -133,57 +133,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         //  ---------------------------------xxxxx-------------------------------------------
 
-        // Delete Operation
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-
-
-            // Using Find method you can only deal with primary key
-            Product? productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
-
-            // Using FirstOrDefault method you can deal with any parameter like Id, Name anything
-            // Product? productFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);
-
-            // Using Where method
-            // Product? productFromDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
-
-
-            if (productFromDb == null)
-            {
-                return NotFound();
-            }
-
-            return View(productFromDb);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePost(int? id)
-        {
-            Product? obj = _unitOfWork.Product.Get(u => u.Id == id);
-
-            if (obj == null)
-            {
-                return NotFound();
-            }
-
-            _unitOfWork.Product.Remove(obj);
-
-            //Actual deleting the data to database which is deleted by UI
-            _unitOfWork.Save();
-
-            // Create TempData for display notification where the data deleted successfully or not.
-            TempData["success"] = "Product deleted successfully";
-
-            // You can pass action only i.e Index when you are same controller otherwise pass 2nd parameter controller is good practice
-            //return RedirectToAction("Index","Product");
-
-            return RedirectToAction("Index");
-
-        }
+       
 
         #region API Calls
         [HttpGet]
@@ -193,6 +143,30 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
             return Json(new {data = objProductList});
         }
+
+        
+        public IActionResult Delete(int? id)
+        {
+            var productToBeDeleted = _unitOfWork.Product.Get(u=> u.Id == id);
+
+            if(productToBeDeleted == null)
+            {
+                return Json(new {success  = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('\\'));
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.Product.Remove(productToBeDeleted);
+            _unitOfWork.Save();
+            
+            return Json(new { success = true, message = "Delete Successful" });
+        }
+
         #endregion
 
     }
