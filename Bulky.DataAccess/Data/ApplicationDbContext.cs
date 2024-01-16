@@ -1,10 +1,31 @@
 ﻿using BulkyBook.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+
+// ASP.NET Core Identity: Is an API that supports user interface (UI) login functionality.
+
+//Manages users, passwords, profile data, roles, claims, tokens, email confirmation, and more.
+
+
+// For Adding IdentityDbContext class you have install NuGet Package
+// Package Name : Microsoft.AspNetCore.Identity.EntityFrameworkCore(8.0.0)
+// Make sure all version numbers are same while package installing like (8.0.0) 
+// Do not install updated version like 8.0.1 or lesser version than 8.0.0 (We have all packages with 8.0.0 version) 
+
+// Steps For Adding Identity functionalities :
+// 1. public class ApplicationDbContext : IdentityDbContext  ....Inherit from IdentityDbContext class
+// 2. Install Package : Microsoft.AspNetCore.Identity.EntityFrameworkCore(8.0.0) for IdentityDbContext class
+// 3. base.OnModelCreating(modelBuilder);.....Add this line in void OnModelCreating(ModelBuilder modelBuilder) method
+// 4. This is most important step "Scaffold Identity" :
+//      Right click on BulkyBookWeb => Add => New Scaffolded Item => Identity => Add
+//      => Tick mark checkbox of Override all files => Go to DbContext class : Select ApplicationDbContext file => then Add.                                                                         
+
+
 namespace BulkyBook.DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         {
@@ -20,6 +41,11 @@ namespace BulkyBook.DataAccess.Data
         // Inserting data Category table also called as Seed Category table
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           
+            // When you add IdentityDbContext class then add below line compulsory 
+
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
                 new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
