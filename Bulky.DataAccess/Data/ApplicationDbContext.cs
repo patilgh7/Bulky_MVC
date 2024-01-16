@@ -1,4 +1,5 @@
 ﻿using BulkyBook.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -22,10 +23,14 @@ using Microsoft.EntityFrameworkCore.Metadata;
 //      Right click on BulkyBookWeb => Add => New Scaffolded Item => Identity => Add
 //      => Tick mark checkbox of Override all files => Go to DbContext class : Select ApplicationDbContext file => then Add.                                                                         
 
+// Note : After Scaffold Identity step you have to fix issue that occurs due to duplicate file of ApplicationDbContext.cs
+// BulkyBookWeb Project in Areas => Inside Identity Folder => Data => ApplicationDbContext.cs file is created automatically 
+// while Scaffolding so you have to delete that file.
+
 
 namespace BulkyBook.DataAccess.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         {
