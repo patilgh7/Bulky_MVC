@@ -11,5 +11,11 @@ namespace BulkyBook.Utility
         // SD => Static Details
         // Here we are mentioning all the constants for our websites in this class
 
+        public const string Role_Customer = "Customer";
+        public const string Role_Company = "Company";
+        public const string Role_Admin = "Admin";
+        public const string Role_Employee = "Employee";
+
+
     }
 }
