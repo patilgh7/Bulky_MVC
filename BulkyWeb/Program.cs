@@ -14,6 +14,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+// for working register and login we need the below code
+builder.Services.AddRazorPages();
+
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 var app = builder.Build();
@@ -31,9 +34,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// For authenticate user always write before UseAuthorization() line
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+// Mapping razor pages for register and login
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
