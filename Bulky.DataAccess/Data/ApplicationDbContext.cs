@@ -44,6 +44,8 @@ namespace BulkyBook.DataAccess.Data
 
         public DbSet<Company> Companies { get; set; }
 
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }    
 
         // If you want insert data into Categories table then use OnModelCreating method and data into it
