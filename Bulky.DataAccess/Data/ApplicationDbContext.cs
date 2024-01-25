@@ -42,6 +42,8 @@ namespace BulkyBook.DataAccess.Data
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Company> Companies { get; set; }
+
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }    
 
         // If you want insert data into Categories table then use OnModelCreating method and data into it
@@ -61,6 +63,34 @@ namespace BulkyBook.DataAccess.Data
                 );
 
             // CategoryId = 1    This is Foreign Key
+
+            modelBuilder.Entity<Company>().HasData(
+             new Company { Id = 1, Name = "Tech Solution", StreetAddress = "123 Tech st", City = "Tech City", 
+                 PostalCode = "12121", State = "IL", PhoneNumber ="6669990000" },
+
+             new Company
+             {
+                 Id = 2,
+                 Name = "Vivid Books",
+                 StreetAddress = "999 vid st",
+                 City = "Vid City",
+                 PostalCode = "66666",
+                 State = "IL",
+                 PhoneNumber = "7779990000"
+             },
+
+             new Company
+             {
+                 Id = 3,
+                 Name = "Reader Club",
+                 StreetAddress = "999 Main st",
+                 City = "Lala land",
+                 PostalCode = "999999",
+                 State = "NY",
+                 PhoneNumber = "111333555"
+             }
+
+             );
 
             modelBuilder.Entity<Product>().HasData(
 
