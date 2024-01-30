@@ -14,7 +14,7 @@ namespace BulkyBook.DataAccess.Repository.IRepository
 
         // When you want to pass predicate that means condition check in method like Find() method or FirstorDefault() method
         // For that syntax => Expression<Func<T,bool>> filter
-        T Get(Expression<Func<T,bool>> filter, string? includeProperties = null);
+        T Get(Expression<Func<T,bool>> filter, string? includeProperties = null, bool tracked = false);
 
         void Add(T entity);
 

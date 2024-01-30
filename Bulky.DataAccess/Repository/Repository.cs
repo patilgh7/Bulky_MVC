@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BulkyBook.DataAccess.Repository
 {
@@ -30,9 +31,24 @@ namespace BulkyBook.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        // When you retrieve or get something it constantly tracking that by entity framework
+        // When you retrieve cartFromDb if you do not have call the update method it will automatically update in database.
+        // To overcome the implicit updation in database by entity frmework we will add tracked parameter to Get method
+        // (bool tracked = false) by using this we will make updation explicit
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query;
+            if (tracked)
+            {
+                query = dbSet;
+
+            }
+            else
+            {
+                query = dbSet.AsNoTracking();
+
+            }
+
             query = query.Where(filter);
 
             if (!string.IsNullOrEmpty(includeProperties))

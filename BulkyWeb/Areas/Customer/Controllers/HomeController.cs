@@ -49,6 +49,9 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             shoppingCart.ApplicationUserId = userId;
 
             // check userId and ProductId are not duplicate
+            // When you retrieve something it constantly tracking that by entity framework
+            // When you retrieve cartFromDb if you do not have call the update method it will automatically update in database.
+            // To make update method explicit we will add parameter in Get method (bool tracked = false )of Repository.cs 
             ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId &&
             u.ProductId == shoppingCart.ProductId);
 
@@ -64,6 +67,8 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
 
             }
+
+            TempData["success"] = "Cart Updated Successfully";
 
             _unitOfWork.Save();
 
