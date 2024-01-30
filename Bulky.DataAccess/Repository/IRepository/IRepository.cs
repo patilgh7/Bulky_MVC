@@ -10,7 +10,8 @@ namespace BulkyBook.DataAccess.Repository.IRepository
     public interface IRepository<T> where T : class
     {
         // T - Category
-        IEnumerable<T> GetAll(string? includeProperties = null);
+        // Expression<Func<T, bool>>? filter => in this ? denotes filter is optional
+        IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null);
 
         // When you want to pass predicate that means condition check in method like Find() method or FirstorDefault() method
         // For that syntax => Expression<Func<T,bool>> filter
