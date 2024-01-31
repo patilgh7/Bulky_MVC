@@ -48,6 +48,14 @@ namespace BulkyBook.DataAccess.Data
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }    
 
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
+
+
+
+
         // If you want insert data into Categories table then use OnModelCreating method and data into it
         // Inserting data Category table also called as Seed Category table
         protected override void OnModelCreating(ModelBuilder modelBuilder)
