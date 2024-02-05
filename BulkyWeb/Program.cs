@@ -29,6 +29,27 @@ builder.Services.ConfigureApplicationCookie(options => {
 
 });
 
+// Register by facebook account :
+// First Go to https://developers.facebook.com/docs/facebook-login/web
+// and click on Facebook Developer Account and login to facebook account
+// and Create App => Other Select Next=> Select an app type : Consumer next =>
+// => Add an app name and App contact email => enter your facebook account password
+// => Select facebook login setup => Select Web (www) => Site Url in Site Url copy your localhost url
+// => https://localhost:7289/ => save changes => continue => next => next => next 
+// Then Go to left side tab called Facebook Login => Settings => Go to Valid OAuth Redirect URIs
+// and copy https://localhost:7289/sign-facebook this url in Valid OAuth.
+// Then Go to left side tab App Settings => Basic => Copy App ID and App secret to use in below code
+// Then install NuGet Package for facebook authentication 
+// Package name : Microsoft.Aspnetcore.Authentication.Facebook install this package in BulkyBookWeb.
+
+builder.Services.AddAuthentication().AddFacebook(option =>
+{
+    option.AppId = "1837703450077539";
+    option.AppSecret = "98bd72b18606367ab64a66b4ea009bef";
+});
+
+
+
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
