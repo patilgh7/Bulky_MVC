@@ -29,6 +29,19 @@ builder.Services.ConfigureApplicationCookie(options => {
 
 });
 
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+
+
+
+
 // for working register and login we need the below code
 builder.Services.AddRazorPages();
 
@@ -57,6 +70,8 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 // Mapping razor pages for register and login
 app.MapRazorPages();
