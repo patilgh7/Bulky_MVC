@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using BulkyBook.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Stripe;
+using BulkyBook.DataAccess.DBInitializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +63,7 @@ builder.Services.AddSession(options =>
 
 
 
+builder.Services.AddScoped<IDBInitializer,DBInitializer>();
 
 // for working register and login we need the below code
 builder.Services.AddRazorPages();
@@ -94,6 +96,8 @@ app.UseAuthorization();
 
 app.UseSession();
 
+SeedDatabase();
+
 // Mapping razor pages for register and login
 app.MapRazorPages();
 
@@ -102,3 +106,12 @@ app.MapControllerRoute(
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+void SeedDatabase()
+{
+    using(var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDBInitializer>();
+        dbInitializer.Initialize();
+    }
+}
