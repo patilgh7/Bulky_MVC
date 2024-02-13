@@ -38,7 +38,7 @@ namespace BulkyBook.Models
         public DateTime PaymentDate { get; set; }
 
         // DateOnly is feature of .Net 8 so if you are using lesser version of .Net then use DateTime
-        public DateOnly PaymentDueDate { get; set; }
+        public DateTime PaymentDueDate { get; set; }
 
         public string? SessionId {  get; set; }
         public string? PaymentIntentId { get; set; }
